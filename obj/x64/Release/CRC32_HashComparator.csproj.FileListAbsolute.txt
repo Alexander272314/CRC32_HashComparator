@@ -1,0 +1,9 @@
+C:\Users\Alexander\Desktop\CRC32_HashComparator\bin\x64\Release\CRC32_HashComparator.exe
+C:\Users\Alexander\Desktop\CRC32_HashComparator\bin\x64\Release\CRC32_HashComparator.pdb
+C:\Users\Alexander\Desktop\CRC32_HashComparator\obj\x64\Release\CRC32_HashComparator.csproj.AssemblyReference.cache
+C:\Users\Alexander\Desktop\CRC32_HashComparator\obj\x64\Release\CRC32_HashComparator.Form1.resources
+C:\Users\Alexander\Desktop\CRC32_HashComparator\obj\x64\Release\CRC32_HashComparator.Properties.Resources.resources
+C:\Users\Alexander\Desktop\CRC32_HashComparator\obj\x64\Release\CRC32_HashComparator.csproj.GenerateResource.cache
+C:\Users\Alexander\Desktop\CRC32_HashComparator\obj\x64\Release\CRC32_HashComparator.csproj.CoreCompileInputs.cache
+C:\Users\Alexander\Desktop\CRC32_HashComparator\obj\x64\Release\CRC32_HashComparator.exe
+C:\Users\Alexander\Desktop\CRC32_HashComparator\obj\x64\Release\CRC32_HashComparator.pdb

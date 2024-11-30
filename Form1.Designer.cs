@@ -35,6 +35,7 @@
 			this.textBox2_Folder2 = new System.Windows.Forms.TextBox();
 			this.textBox1_Folder1 = new System.Windows.Forms.TextBox();
 			this.button3_GetAnswer = new System.Windows.Forms.Button();
+			this.checkBox1_CompareAll = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// button1_Folder1
@@ -78,7 +79,7 @@
 			this.label1.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.label1.Location = new System.Drawing.Point(12, 138);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(882, 19);
+			this.label1.Size = new System.Drawing.Size(1077, 23);
 			this.label1.TabIndex = 9;
 			this.label1.Text = "Имя исходного файла                   | CRC32 исходного | CRC32 проверяемого | Ре" +
     "зультат проверки";
@@ -90,7 +91,7 @@
 			this.textBox2_Folder2.Location = new System.Drawing.Point(288, 54);
 			this.textBox2_Folder2.Name = "textBox2_Folder2";
 			this.textBox2_Folder2.ReadOnly = true;
-			this.textBox2_Folder2.Size = new System.Drawing.Size(633, 16);
+			this.textBox2_Folder2.Size = new System.Drawing.Size(633, 20);
 			this.textBox2_Folder2.TabIndex = 3;
 			// 
 			// textBox1_Folder1
@@ -100,7 +101,7 @@
 			this.textBox1_Folder1.Location = new System.Drawing.Point(288, 18);
 			this.textBox1_Folder1.Name = "textBox1_Folder1";
 			this.textBox1_Folder1.ReadOnly = true;
-			this.textBox1_Folder1.Size = new System.Drawing.Size(633, 16);
+			this.textBox1_Folder1.Size = new System.Drawing.Size(633, 20);
 			this.textBox1_Folder1.TabIndex = 1;
 			// 
 			// button3_GetAnswer
@@ -114,11 +115,24 @@
 			this.button3_GetAnswer.UseVisualStyleBackColor = true;
 			this.button3_GetAnswer.Click += new System.EventHandler(this.button3_GetAnswer_Click);
 			// 
+			// checkBox1_CompareAll
+			// 
+			this.checkBox1_CompareAll.AutoSize = true;
+			this.checkBox1_CompareAll.Checked = true;
+			this.checkBox1_CompareAll.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.checkBox1_CompareAll.Location = new System.Drawing.Point(300, 90);
+			this.checkBox1_CompareAll.Name = "checkBox1_CompareAll";
+			this.checkBox1_CompareAll.Size = new System.Drawing.Size(463, 24);
+			this.checkBox1_CompareAll.TabIndex = 11;
+			this.checkBox1_CompareAll.Text = "Сравнить все файлы во всех вложенных директориях";
+			this.checkBox1_CompareAll.UseVisualStyleBackColor = true;
+			// 
 			// Form1
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(934, 561);
+			this.ClientSize = new System.Drawing.Size(932, 553);
+			this.Controls.Add(this.checkBox1_CompareAll);
 			this.Controls.Add(this.button3_GetAnswer);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.textBox3_AnswerArea);
@@ -146,6 +160,7 @@
         private System.Windows.Forms.TextBox textBox2_Folder2;
         private System.Windows.Forms.TextBox textBox1_Folder1;
         private System.Windows.Forms.Button button3_GetAnswer;
-    }
+		private System.Windows.Forms.CheckBox checkBox1_CompareAll;
+	}
 }
 

@@ -4,17 +4,20 @@ namespace CRC32_HashComparator
 {
 	public class UnitOfFile
 	{
-		public UnitOfFile(FileInfo fileInfo)
+		public FileInfo Info { get; }
+		public string RelativePath { get; }
+		public string CRC32 { get; private set; }
+		public bool IsAlreadyCompared { get; set; }
+
+		public UnitOfFile(FileInfo fileInfo, string generalPath)
 		{
 			Info = fileInfo;
+			RelativePath = fileInfo.FullName.Replace(generalPath + "\\", "");
+			CRC32 = null;
+			IsAlreadyCompared = false;
 		}
 
-
-		public FileInfo Info { get; }
-		public string CRC32 { get; private set; }
-		
-
-		public Error CalcCRC32()
+		public void CalcCRC32()
 		{
 			byte[] byte_crc32;
 			Crc32 crc32 = new Crc32();
@@ -26,15 +29,17 @@ namespace CRC32_HashComparator
 					byte_crc32 = crc32.ComputeHash(fs);
 				}
 			}
-			catch { return Error.ReadFile; }
+			catch
+			{
+				CRC32 = "error   ";
+				return;
+			}
 
 			string hash = "";
 			for (int i = 0; i < byte_crc32.Length; i++)
 				hash += byte_crc32[i].ToString("X2").ToUpper();
 
 			CRC32 = hash;
-
-			return Error.NOERROR;
 		}
 	}
 }

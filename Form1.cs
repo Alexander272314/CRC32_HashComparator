@@ -10,30 +10,108 @@ namespace CRC32_HashComparator
 {
 	public partial class Form1 : Form
 	{
-		public List<UnitOfFile> Folder1File;
-		public List<UnitOfFile> Folder2File;
+		private List<UnitOfFile> _folder1File;
+		private List<UnitOfFile> _folder2File;
 
-		public int NumberOfGood;
-		public int NumberOfBad;
-		public int NumberOfMissed;
+		private int _numberOfGood;
+		private int _numberOfBad;
+		private int _numberOfMissed;
+		private int _numberOfCalculationErrors;
+
+		private StringBuilder _errorSB;
 
 		public Form1()
 		{
 			InitializeComponent();
 
-			NumberOfGood = 0;
-			NumberOfBad = 0;
-			NumberOfMissed = 0;
+			_numberOfGood = 0;
+			_numberOfBad = 0;
+			_numberOfMissed = 0;
+			_numberOfCalculationErrors = 0;
 
+			label1.Visible = false;
+			button1_Folder1.Enabled = true;
 			button2_Folder2.Enabled = false;
 			button3_GetAnswer.Enabled = false;
-			textBox3_AnswerArea.Enabled = false;
+			textBox1_Folder1.Enabled = false;
+			textBox2_Folder2.Enabled = false;
+			textBox3_AnswerArea.Enabled = true;
+			checkBox1_CompareAll.Enabled = true;
+			checkBox1_CompareAll.Checked = true;
+		}
+
+		private List<Exception> AddFileToList(DirectoryInfo directory, List<UnitOfFile> list, string generalPath, bool compareAll)
+		{
+			FileInfo[] fileInfo = null;
+			DirectoryInfo[] directoryInfo = null;
+			List<Exception> tempExceptionList = new List<Exception>();
+
+			try
+			{
+				fileInfo = directory.GetFiles();
+			}
+			catch (Exception ex)
+			{
+				tempExceptionList.Add(ex);
+			}
+
+			if (compareAll)
+			{
+				try
+				{
+					directoryInfo = directory.GetDirectories();
+				}
+				catch (Exception ex)
+				{
+					tempExceptionList.Add(ex);
+				}
+			}
+
+			if (compareAll && directoryInfo != null)
+				foreach (DirectoryInfo dir in directoryInfo)
+				{
+					List<Exception> exceptionList = AddFileToList(dir, list, generalPath, true);
+
+					if (exceptionList != null)
+						foreach (Exception ex in exceptionList)
+							_errorSB.AppendLine(directory.FullName + Environment.NewLine + ex.Message + Environment.NewLine);
+				}
+
+			if (fileInfo != null)
+			{
+				List<UnitOfFile> tempList = new List<UnitOfFile>(fileInfo.Length);
+
+				foreach (FileInfo file in fileInfo)
+				{
+					try
+					{
+						tempList.Add(new UnitOfFile(file, generalPath));
+					}
+					catch (Exception ex)
+					{
+						_errorSB.AppendLine(directory.FullName + Environment.NewLine + ex.Message + Environment.NewLine);
+						continue;
+					}
+
+					tempList[tempList.Count - 1].CalcCRC32();
+				}
+
+				tempList.OrderBy(x => x.RelativePath);
+				list.AddRange(tempList);
+			}
+
+			if (tempExceptionList.Count > 0)
+				return tempExceptionList;
+			else
+				return null;
 		}
 
 		private void button1_Folder1_Click(object sender, EventArgs e)
 		{
+			textBox3_AnswerArea.Text = "";
 			DirectoryInfo directoryInfo;
-			FileInfo[] fileInfo;
+			_folder1File = new List<UnitOfFile>();
+			_errorSB = new StringBuilder();
 
 			using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
 			{
@@ -44,44 +122,41 @@ namespace CRC32_HashComparator
 			try
 			{
 				directoryInfo = new DirectoryInfo(textBox1_Folder1.Text);
-				fileInfo = directoryInfo.GetFiles();
 			}
-			catch
+			catch (Exception ex)
 			{
-				MessageBox.Show("Ошибка при попытке открыть файл! \n \nПроверьте указанный путь к файлу или проверьте целостность файла.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				textBox1_Folder1.Text = "";
+				_folder1File = null;
+				_errorSB = null;
+				GC.Collect();
 				return;
 			}
 
-			fileInfo.OrderBy(x => x.Name);
+			List<Exception> exceptionList = AddFileToList(directoryInfo, _folder1File, directoryInfo.FullName, checkBox1_CompareAll.Checked);
 
-			Folder1File = new List<UnitOfFile>(fileInfo.Length);
+			if (exceptionList != null)
+				foreach (Exception ex in exceptionList)
+					_errorSB.AppendLine(directoryInfo.FullName + Environment.NewLine + ex.Message + Environment.NewLine);
 
-			Error error;
-			for (int i = 0; i < fileInfo.Length; i++)
-			{
-				Folder1File.Add(new UnitOfFile(fileInfo[i]));
-				error = Folder1File[i].CalcCRC32();
+			if (_errorSB.Length > 0)
+				textBox3_AnswerArea.Text = Environment.NewLine
+										 + "=== ERRORS (folder 1) ================================================================" + Environment.NewLine
+										 + Environment.NewLine
+										 + _errorSB.ToString();
 
-				switch (error)
-				{
-					case Error.NOERROR:
-						button1_Folder1.Enabled = false;
-						textBox1_Folder1.Enabled = false;
-						button2_Folder2.Enabled = true;
-						textBox2_Folder2.Enabled = true;
-						break;
-
-					case Error.ReadFile:
-						MessageBox.Show("Ошибка при попытке открыть файл! \n \nПроверьте указанный путь к файлу или проверьте целостность файла.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-						return;
-				}
-			}
+			button1_Folder1.Enabled = false;
+			button2_Folder2.Enabled = true;
+			checkBox1_CompareAll.Enabled = false;
+			textBox3_AnswerArea.Select(0, 0);
 		}
 
 		private void button2_Folder2_Click(object sender, EventArgs e)
 		{
+			textBox3_AnswerArea.Text = "";
 			DirectoryInfo directoryInfo;
-			FileInfo[] fileInfo;
+			_folder2File = new List<UnitOfFile>();
+			_errorSB = new StringBuilder();
 
 			using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
 			{
@@ -91,77 +166,117 @@ namespace CRC32_HashComparator
 
 			try
 			{
+				if (textBox1_Folder1.Text == textBox2_Folder2.Text)
+					throw new Exception("Выбрана та же самая папка! Выберите другую папку.");
+
 				directoryInfo = new DirectoryInfo(textBox2_Folder2.Text);
-				fileInfo = directoryInfo.GetFiles();
 			}
-			catch
+			catch (Exception ex)
 			{
-				MessageBox.Show("Ошибка при попытке открыть файл! \n \nПроверьте указанный путь к файлу или проверьте целостность файла.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				textBox2_Folder2.Text = "";
+				_folder2File = null;
+				_errorSB = null;
+				GC.Collect();
 				return;
 			}
 
-			fileInfo.OrderBy(x => x.Name);
+			List<Exception> exceptionList = AddFileToList(directoryInfo, _folder2File, directoryInfo.FullName, checkBox1_CompareAll.Checked);
 
-			Folder2File = new List<UnitOfFile>(fileInfo.Length);
+			if (exceptionList != null)
+				foreach (Exception ex in exceptionList)
+					_errorSB.AppendLine(directoryInfo.FullName + Environment.NewLine + ex.Message + Environment.NewLine);
 
-			Error error;
-			for (int i = 0; i < fileInfo.Length; i++)
-			{
-				Folder2File.Add(new UnitOfFile(fileInfo[i]));
-				error = Folder2File[i].CalcCRC32();
+			if (_errorSB.Length > 0)
+				textBox3_AnswerArea.Text = Environment.NewLine
+										 + "=== ERRORS (folder 2) ================================================================" + Environment.NewLine
+										 + Environment.NewLine
+										 + _errorSB.ToString();
 
-				switch (error)
-				{
-					case Error.NOERROR:
-						button2_Folder2.Enabled = false;
-						textBox2_Folder2.Enabled = false;
-						button3_GetAnswer.Enabled = true;
-						textBox3_AnswerArea.Enabled = true;
-						break;
-						
-					case Error.ReadFile:
-						MessageBox.Show("Ошибка при попытке открыть файл! \n \nПроверьте указанный путь к файлу или проверьте целостность файла.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-						return;
-				}
-			}
+			button2_Folder2.Enabled = false;
+			button3_GetAnswer.Enabled = true;
+			textBox3_AnswerArea.Select(0, 0);
 		}
 
 		private void button3_GetAnswer_Click(object sender, EventArgs e)
 		{
+			label1.Visible = true;
+			textBox3_AnswerArea.Text = "";
 			StringBuilder Answer = new StringBuilder(Environment.NewLine);
 
-			for (int i = 0; i < Folder1File.Count; i++)
+			for (int i = 0; i < _folder1File.Count; i++)
 			{
-				StringBuilder sb = new StringBuilder(Folder1File[i].Info.Name);
+				StringBuilder sb = new StringBuilder();
+				string name = _folder1File[i].RelativePath;
 
-				if (sb.Length < 38)
+				if (name.Length < 38)
 				{
+					sb.Append(name);
 					int s = 38 - sb.Length;
-					while (s > 0)
+					sb.Append(' ', s);
+				}
+				else
+				{
+					if (name.Length < 97)
 					{
-						sb.Append(' ');
-						s--;
+						sb.Append(name);
+						sb.Append(Environment.NewLine);
+						sb.Append("                                      ");
+					}
+					else
+					{
+						int div = name.Length / 97;
+						int mod = name.Length % 97;
+
+						for (int x = 0; x < div; x++)
+						{
+							sb.Append(name.Substring(0, 97));
+							sb.Append(Environment.NewLine);
+							name = name.Remove(0, 97);
+						}
+
+						if (mod < 38)
+						{
+							sb.Append(name);
+							int s = 38 - mod;
+							sb.Append(' ', s);
+						}
 					}
 				}
 
-				sb.Append("| " + Folder1File[i].CRC32 + "        | ");
+				sb.Append("| " + _folder1File[i].CRC32 + "        | ");
+
+				if (_folder1File[i].CRC32 == "error   ")
+					_numberOfCalculationErrors++;
 
 				bool miss = true;
-				for (int j = 0; j < Folder2File.Count; j++)
+				for (int j = 0; j < _folder2File.Count; j++)
 				{
-					if (Folder1File[i].Info.Name == Folder2File[j].Info.Name)
+					if (_folder2File[j].IsAlreadyCompared)
 					{
-						if (Folder1File[i].CRC32 == Folder2File[j].CRC32)
+						continue;
+					}
+					else if (_folder1File[i].RelativePath == _folder2File[j].RelativePath)
+					{
+						if (_folder2File[j].CRC32 == "error   ")
 						{
-							sb.Append(Folder2File[j].CRC32 + "           | true");
-							NumberOfGood++;
+							sb.Append(_folder2File[j].CRC32 + "           | false");
+							_numberOfBad++;
+							_numberOfCalculationErrors++;
+							miss = false;
+							break;
+						}
+						else if (_folder1File[i].CRC32 == _folder2File[j].CRC32)
+						{
+							sb.Append(_folder2File[j].CRC32 + "           | true");
+							_numberOfGood++;
 							miss = false;
 							break;
 						}
 						else
 						{
-							sb.Append(Folder2File[j].CRC32 + "           | false");
-							NumberOfBad++;
+							sb.Append(_folder2File[j].CRC32 + "           | false");
+							_numberOfBad++;
 							miss = false;
 							break;
 						}
@@ -170,7 +285,7 @@ namespace CRC32_HashComparator
 				if (miss)
 				{
 					sb.Append("                   | файл отсутствует");
-					NumberOfMissed++;
+					_numberOfMissed++;
 				}
 
 				Answer.AppendLine(sb.ToString());
@@ -181,21 +296,23 @@ namespace CRC32_HashComparator
 			textBox3_AnswerArea.Text += Environment.NewLine
 									 + "=== ИТОГО ============================================================================" + Environment.NewLine
 									 + Environment.NewLine
-									 + "Всего исходных файлов: " + Folder1File.Count + Environment.NewLine
+									 + "Всего исходных файлов: " + _folder1File.Count + Environment.NewLine
 									 + Environment.NewLine
-									 + "Хеш-сумма соответствует: " + NumberOfGood + Environment.NewLine
+									 + "Хеш-сумма соответствует: " + _numberOfGood + Environment.NewLine
 									 + Environment.NewLine
-									 + "Хеш-сумма не соответствует: " + NumberOfBad + Environment.NewLine
+									 + "Хеш-сумма не соответствует: " + _numberOfBad + Environment.NewLine
 									 + Environment.NewLine
-									 + "Файлов отсутствует: " + NumberOfMissed + Environment.NewLine
+									 + "Файлов отсутствует: " + _numberOfMissed + Environment.NewLine
 									 + Environment.NewLine;
+
+			if (_numberOfCalculationErrors > 0)
+				textBox3_AnswerArea.Text += "Ошибок вычисления контрольной суммы: " + _numberOfCalculationErrors + Environment.NewLine + Environment.NewLine;
 
 			textBox3_AnswerArea.Select(0, 0);
 			button3_GetAnswer.Enabled = false;
-			
-			Answer = null;
-			Folder1File = null;
-			Folder2File = null;
+
+			_folder1File = null;
+			_folder2File = null;
 			GC.Collect();
 		}
 	}

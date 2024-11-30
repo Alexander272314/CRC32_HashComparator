@@ -7,3 +7,9 @@
 ![IMG2](README_IMG/2.png)
 \
 ![IMG3](README_IMG/3.png)
+\
+![IMG4](README_IMG/4.png)
+\
+![IMG5](README_IMG/5.png)
+\
+![IMG6](README_IMG/6.png)

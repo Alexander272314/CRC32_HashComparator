@@ -1,0 +1,79 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Alexander\\Desktop\\CRC32_HashComparator\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4631F3F0-5816-451A-A7CA-60B41826CBCD}|CRC32_HashComparator.csproj|c:\\users\\alexander\\desktop\\crc32_hashcomparator\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4631F3F0-5816-451A-A7CA-60B41826CBCD}|CRC32_HashComparator.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4631F3F0-5816-451A-A7CA-60B41826CBCD}|CRC32_HashComparator.csproj|C:\\Users\\Alexander\\Desktop\\CRC32_HashComparator\\unitoffile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4631F3F0-5816-451A-A7CA-60B41826CBCD}|CRC32_HashComparator.csproj|solutionrelative:unitoffile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4631F3F0-5816-451A-A7CA-60B41826CBCD}|CRC32_HashComparator.csproj|c:\\users\\alexander\\desktop\\crc32_hashcomparator\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4631F3F0-5816-451A-A7CA-60B41826CBCD}|CRC32_HashComparator.csproj|solutionrelative:form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 215,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e506b91c-c606-466a-90a9-123d1d1e12b3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{f2e84780-2af1-11d1-a7fa-00a0c9110051}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Form1.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\Alexander\\Desktop\\CRC32_HashComparator\\Form1.Designer.cs",
+              "RelativeDocumentMoniker": "Form1.Designer.cs",
+              "ToolTip": "C:\\Users\\Alexander\\Desktop\\CRC32_HashComparator\\Form1.Designer.cs",
+              "RelativeToolTip": "Form1.Designer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-30T11:26:04.965Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "C:\\Users\\Alexander\\Desktop\\CRC32_HashComparator\\Form1.cs",
+              "RelativeDocumentMoniker": "Form1.cs",
+              "ToolTip": "C:\\Users\\Alexander\\Desktop\\CRC32_HashComparator\\Form1.cs",
+              "RelativeToolTip": "Form1.cs",
+              "ViewState": "AgIAAJgAAAAAAAAAAAAgwKoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-23T09:09:28.163Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UnitOfFile.cs",
+              "DocumentMoniker": "C:\\Users\\Alexander\\Desktop\\CRC32_HashComparator\\UnitOfFile.cs",
+              "RelativeDocumentMoniker": "UnitOfFile.cs",
+              "ToolTip": "C:\\Users\\Alexander\\Desktop\\CRC32_HashComparator\\UnitOfFile.cs",
+              "RelativeToolTip": "UnitOfFile.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-29T17:38:27.817Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
