@@ -96,8 +96,7 @@ namespace CRC32_HashComparator
 					tempList[tempList.Count - 1].CalcCRC32();
 				}
 
-				tempList.OrderBy(x => x.RelativePath);
-				list.AddRange(tempList);
+				list.AddRange(tempList.OrderBy(x => x.RelativePath));
 			}
 
 			if (tempExceptionList.Count > 0)

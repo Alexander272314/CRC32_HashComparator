@@ -7,3 +7,12 @@ C:\Users\Alexander\Desktop\CRC32_HashComparator\obj\Release\CRC32_HashComparator
 C:\Users\Alexander\Desktop\CRC32_HashComparator\obj\Release\CRC32_HashComparator.csproj.CoreCompileInputs.cache
 C:\Users\Alexander\Desktop\CRC32_HashComparator\obj\Release\CRC32_HashComparator.exe
 C:\Users\Alexander\Desktop\CRC32_HashComparator\obj\Release\CRC32_HashComparator.pdb
+D:\Git\CRC32_HashComparator\bin\Release\CRC32_HashComparator.exe
+D:\Git\CRC32_HashComparator\bin\Release\CRC32_HashComparator.pdb
+D:\Git\CRC32_HashComparator\obj\Release\CRC32_HashComparator.csproj.AssemblyReference.cache
+D:\Git\CRC32_HashComparator\obj\Release\CRC32_HashComparator.Form1.resources
+D:\Git\CRC32_HashComparator\obj\Release\CRC32_HashComparator.Properties.Resources.resources
+D:\Git\CRC32_HashComparator\obj\Release\CRC32_HashComparator.csproj.GenerateResource.cache
+D:\Git\CRC32_HashComparator\obj\Release\CRC32_HashComparator.csproj.CoreCompileInputs.cache
+D:\Git\CRC32_HashComparator\obj\Release\CRC32_HashComparator.exe
+D:\Git\CRC32_HashComparator\obj\Release\CRC32_HashComparator.pdb
